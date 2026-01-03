@@ -160,4 +160,9 @@ function goBack() {
   history.back();
 }জদ
 window.submitMemberForm = submitMemberForm;
-window.goHome = goHome; // যদি থাকে
+window.goHome = goHome; //
+/* ========= EXPOSE TO WINDOW ========= */
+window.submitMemberForm = submitMemberForm;
+window.submitPayment = submitPayment;
+window.closeAccount = closeAccount;
+window.goHome = goHome;
