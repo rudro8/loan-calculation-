@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Loan Calculation</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1fa36a" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="top-bar">
+  <span class="menu">☰</span>
+  <h1>Loan Calculation</h1>
+</header>
+
+<!-- ================= DASHBOARD ================= -->
+<section class="dashboard">
+
+  <div class="user-card">
+    <div class="avatar">R</div>
+    <div>
+      <strong>Rudro Rakib</strong>
+      <p>Loan Calculation</p>
+    </div>
+  </div>
+
+  <div class="summary-card">
+    <div class="main-circle">
+      <span id="db_main">৳0</span>
+      <small>Main</small>
+    </div>
+
+    <div class="stats">
+      <p>মাসিক লাভ <span id="db_monthly">৳0</span></p>
+      <p>মোট লাভ <span id="db_total">৳0</span></p>
+      <p>বিতরণ <span id="db_distributed">৳0</span></p>
+      <p>বকেয়া <span id="db_due">৳0</span></p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================= QUICK LINKS ================= -->
+<section class="quick-links">
+  <button onclick="showAddMember()">➕<br>নতুন সদস্য</button>
+  <button onclick="showMemberList()">👥<br>সদস্য তালিকা</button>
+  <button onclick="showDue()">৳<br>কিস্তি আদায়</button>
+  <button>📊<br>রিপোর্ট</button>
+  <button>⚙️<br>সেটিংস</button>
+  <button>💾<br>ব্যাকআপ</button>
+</section>
+
+<!-- ================= MEMBER LIST ================= -->
+<section id="memberList" class="page hidden">
+  <h2>সদস্য তালিকা</h2>
+  <div id="memberListBox"></div>
+  <button class="back-btn" onclick="goHome()">⬅ Back</button>
+</section>
+
+<!-- ================= SHORT PROFILE ================= -->
+<section id="memberProfile" class="page hidden">
+  <h2>সদস্য প্রোফাইল</h2>
+  <div id="profileBox"></div>
+
+  <button onclick="viewMemberDetail()">📄 সদস্য ডিটেইল দেখুন</button>
+
+  <h3>পেমেন্ট হিস্ট্রি</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>তারিখ</th>
+        <th>পরিমাণ</th>
+      </tr>
+    </thead>
+    <tbody id="paymentTable"></tbody>
+  </table>
+
+  <button class="back-btn" onclick="backToList()">⬅ Back</button>
+</section>
+
+<!-- ================= FULL MEMBER DETAIL ================= -->
+<section id="memberDetail" class="page hidden">
+  <h2>সদস্য পূর্ণ বিবরণ</h2>
+  <div id="detailBox"></div>
+  <button class="back-btn" onclick="backToProfile()">⬅ Back</button>
+</section>
+
+<!-- ================= ADD MEMBER ================= -->
+<section id="addMember" class="page hidden">
+  <h2>নতুন সদস্য</h2>
+
+  <input id="m_name" placeholder="নাম" />
+  <input id="m_mobile" placeholder="মোবাইল" />
+  <select id="m_loanType">
+    <option value="INSTALLMENT">কিস্তি</option>
+    <option value="PROFIT">শুধু লাভ</option>
+  </select>
+  <input id="m_principal" placeholder="মূল টাকা" />
+  <input id="m_profitRate" placeholder="লাভ %" />
+  <input id="m_installments" placeholder="মোট কিস্তি" />
+  <input id="m_loanDate" placeholder="DD/MM/YYYY" />
+  <input id="m_guarantor" placeholder="জামিনদার নাম" />
+  <input id="m_guarantor_mobile" placeholder="জামিনদার মোবাইল" />
+
+  <button onclick="submitMemberForm()">সংরক্ষণ</button>
+  <button class="back-btn" onclick="goHome()">⬅ Back</button>
+</section>
+
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="bottom-nav">
+  <button onclick="goHome()">🏠<br>Home</button>
+  <button onclick="showMemberList()">👥<br>Members</button>
+  <button>💰<br>Collect</button>
+  <button>⚙️<br>Settings</button>
+</nav>
+
+<!-- ================= JS ================= -->
+<script type="module" src="app.js"></script>
+
+<script>
+  function goHome(){
+    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+  }
+  function showMemberList(){
+    goHome();
+    document.getElementById('memberList').classList.remove('hidden');
+    renderMemberList("memberListBox");
+  }
+  function showAddMember(){
+    goHome();
+    document.getElementById('addMember').classList.remove('hidden');
+  }
+  function backToList(){
+    showMemberList();
+  }
+  function viewMemberDetail(){
+    document.getElementById('memberProfile').classList.add('hidden');
+    document.getElementById('memberDetail').classList.remove('hidden');
+  }
+  function backToProfile(){
+    document.getElementById('memberDetail').classList.add('hidden');
+    document.getElementById('memberProfile').classList.remove('hidden');
+  }
+
+  // PWA
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+  }
+</script>
+
+</body>
+</html>
