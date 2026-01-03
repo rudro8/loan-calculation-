@@ -159,3 +159,5 @@ function setText(id, value) {
 function goBack() {
   history.back();
 }জদ
+window.submitMemberForm = submitMemberForm;
+window.goHome = goHome; // যদি থাকে
